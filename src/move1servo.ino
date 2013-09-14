@@ -9,9 +9,6 @@ I'll miss you Brownie
 
 int posS1 = 0;         // variable to store the servo position
 int posS1min = 0;      //initial position
-int posS1max = 180;    //final position
-int posS1p;            //increment in position value 
-int posS1m;            //decrement of position value
 int incomingByte = 0;  // for incoming serial data
 int currentPosS1;      //current position 1
 
