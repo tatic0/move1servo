@@ -8,6 +8,7 @@ prerequisites
 * arduino (I use a diecimila)
 * Adafruit(r) motorshield
 * servo 5V (I took one from an RC helicopter)
+* built and uploaded using inotool http://inotool.org
 
 use
 ---
