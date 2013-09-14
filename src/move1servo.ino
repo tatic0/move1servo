@@ -8,12 +8,16 @@ I'll miss you Brownie
 */
 
 int posS1 = 0;         // variable to store the servo position
-int posS1min = 0;      //initial position
+int posS2 = 0;         // variable to store the servo position
+int posS1i = 0;        // servo 1 initial position
+int posS2i = 0;      // servo 2 initial position
 int incomingByte = 0;  // for incoming serial data
-int currentPosS1;      //current position 1
+int currentPosS1;      //current position servo 1
+int currentPosS2;      //current position servo 2
 
 
 Servo servo1;  // create servo object to control a servo. A maximum of eight servo objects can be created 
+Servo servo2;  
 
 void setup() {
   // put your setup code here, to run once:
@@ -21,7 +25,9 @@ void setup() {
   Serial.println("Arduino code starting");
 
   servo1.attach(9);  // attaches the servo on pin 9 to the servo object 
-  servo1.write(posS1min); //set the servos position to 0 degrees
+  servo2.attach(10);  // attaches the servo on pin 9 to the servo object 
+  servo1.write(posS1i); //set the servo position to 0 degrees
+  servo2.write(posS2i); //set the servo position to 0 degrees
 
 
   /* ascii codes for the keys to de used:
@@ -50,7 +56,7 @@ void loop() {
       posS1 += 10; 
       servo1.write(posS1);
       currentPosS1 = servo1.read();
-      Serial.print("Current position: ");
+      Serial.print("S1 Current position: ");
       Serial.println(currentPosS1);
       break;
     case 100:
@@ -60,29 +66,42 @@ void loop() {
       posS1 -= 10; 
       servo1.write(posS1);
       currentPosS1 = servo1.read();
-      Serial.print("Current position: ");
+      Serial.print("S1 Current position: ");
       Serial.println(currentPosS1);
       break;
     case 119:
-      servo1.write(180);
-      currentPosS1 = servo1.read();
-      Serial.print("Current position: ");
-      Serial.println(currentPosS1);      
+      if(posS2 > 180){
+        posS2=170;
+      }
+      posS2 += 10; 
+      servo2.write(posS2);
+      currentPosS2 = servo2.read();
+      Serial.print("S2 Current position: ");
+      Serial.println(currentPosS2);      
       break;
     case 115:
-      servo1.write(0);
-      currentPosS1 = servo1.read();
-      Serial.print("Current position: ");
-      Serial.println(currentPosS1);
+      if(posS2 < 0){
+        posS2=10;
+      }
+      posS2 -= 10; 
+      servo2.write(posS2);
+      currentPosS1 = servo2.read();
+      Serial.print("S2 Current position: ");
+      Serial.println(currentPosS2);
       break;
     case 120:
-      Serial.println("Quitting!");
+      Serial.println("Reset servo to default position");
+      servo1.write(posS1i);
+      servo1.write(posS2i);
+      posS1 = 0;
       break;
     default:
       incomingByte = 0;
     }
-  Serial.print("Current position requested: ");
+  Serial.print("S1 Current position requested: ");
   Serial.println(posS1);
+  Serial.print("S2 Current position requested: ");
+  Serial.println(posS2);
   incomingByte = 0;
   }  
 }
